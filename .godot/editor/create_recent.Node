@@ -1,0 +1,14 @@
+Button
+Label
+HBoxContainer
+VBoxContainer
+AudioStreamPlayer
+LineEdit
+AnimationPlayer
+Node
+AudioStreamPlayer2D
+ColorRect
+Panel
+Timer
+Control
+Sprite2D

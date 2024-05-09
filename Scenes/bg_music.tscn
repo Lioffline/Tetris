@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2km65oo8vimf"]
+
+[ext_resource type="AudioStream" uid="uid://bqma1fyfnlcbg" path="res://Assets/tetris _f.wav" id="1_n0vhp"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer"]
+stream = ExtResource("1_n0vhp")
+volume_db = -25.351
+autoplay = true

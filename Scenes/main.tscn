@@ -1,0 +1,336 @@
+[gd_scene load_steps=27 format=3 uid="uid://cjshm244ivhhy"]
+
+[ext_resource type="Texture2D" uid="uid://dj1olp7v7y623" path="res://Assets/Border.png" id="1_2kdh7"]
+[ext_resource type="Script" path="res://Scenes/trans_test.gd" id="1_pvqfx"]
+[ext_resource type="Texture2D" uid="uid://dddenph2txf1h" path="res://Assets/Grid.png" id="2_7mxh0"]
+[ext_resource type="Script" path="res://Scripts/piece_spawner.gd" id="3_ygpth"]
+[ext_resource type="Script" path="res://Scripts/board.gd" id="4_yatxc"]
+[ext_resource type="Script" path="res://Scripts/score.gd" id="5_8rsmg"]
+[ext_resource type="PackedScene" uid="uid://c4j05v6wfo823" path="res://Scenes/tetromino.tscn" id="5_j0sar"]
+[ext_resource type="PackedScene" uid="uid://ct2meksk8huhw" path="res://Scenes/ui.tscn" id="6_5ie2u"]
+[ext_resource type="FontFile" uid="uid://dx8xmmu1q1k1" path="res://Assets/determination_mono.ttf" id="7_kfwyv"]
+[ext_resource type="Texture2D" uid="uid://b08eqk0uqriut" path="res://Assets/test.png" id="9_u0sf2"]
+[ext_resource type="Theme" uid="uid://dx4s2by52h7iv" path="res://Resources/_MainMenu.tres" id="11_psayi"]
+[ext_resource type="Texture2D" uid="uid://euonjnx3bir5" path="res://Assets/instructions.png" id="12_30c0c"]
+[ext_resource type="AudioStream" uid="uid://cq7st5bjhwvc3" path="res://Assets/LVL1.wav" id="13_qtgqm"]
+[ext_resource type="AudioStream" uid="uid://bp54mbvlu87jy" path="res://Assets/LVL2.wav" id="14_u6j8o"]
+[ext_resource type="AudioStream" uid="uid://tsvv4bp3ju6q" path="res://Assets/LVL4.wav" id="15_7x8lc"]
+[ext_resource type="AudioStream" uid="uid://c8svcid0oai5e" path="res://Assets/LVL3.wav" id="15_8d1t3"]
+[ext_resource type="AudioStream" uid="uid://d0a83fmwtnqnq" path="res://Assets/select_your_position.wav" id="17_t35j0"]
+[ext_resource type="AudioStream" uid="uid://dxnjlsaoyu1fg" path="res://Assets/final_position.wav" id="18_aw23f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5jwjk"]
+
+[sub_resource type="Animation" id="Animation_s1oe1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("labels/Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(260, -489)]
+}
+
+[sub_resource type="Animation" id="Animation_2fbp6"]
+resource_name = "label_shake"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer/score:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 86), Vector2(0, 86), Vector2(0, 86)]
+}
+
+[sub_resource type="Animation" id="Animation_3cpvy"]
+resource_name = "tetris_shake"
+length = 0.05
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("labels/Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(260, -489), Vector2(260, -489), Vector2(260, -489)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_11vvb"]
+_data = {
+"RESET": SubResource("Animation_s1oe1"),
+"label_shake": SubResource("Animation_2fbp6"),
+"tetris_shake": SubResource("Animation_3cpvy")
+}
+
+[sub_resource type="Animation" id="Animation_jvhqr"]
+resource_name = "fade_in"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("transition/ColorRect:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.05, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("transition/ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_akfbk"]
+resource_name = "fade_out"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("transition/ColorRect:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("transition/ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hwltm"]
+_data = {
+"fade_in": SubResource("Animation_jvhqr"),
+"fade_out": SubResource("Animation_akfbk")
+}
+
+[node name="main" type="Node"]
+script = ExtResource("1_pvqfx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="."]
+offset_left = -256.0
+offset_top = -496.0
+offset_right = 1794.0
+offset_bottom = 3474.0
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_2kdh7")
+
+[node name="GridTexture" type="TextureRect" parent="Border"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -961.0
+offset_top = -1921.0
+offset_right = 959.0
+offset_bottom = 1928.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_7mxh0")
+stretch_mode = 1
+
+[node name="Board" type="Node" parent="."]
+script = ExtResource("4_yatxc")
+tetromino_scene = ExtResource("5_j0sar")
+
+[node name="labels" type="Node" parent="."]
+
+[node name="LabelTetris" type="Label" parent="labels"]
+visible = false
+offset_left = -544.0
+offset_top = -72.0
+offset_right = -264.0
+offset_bottom = 10.0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("7_kfwyv")
+theme_override_font_sizes/font_size = 67
+text = "TETRIS!"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="labels"]
+offset_left = 260.0
+offset_top = -489.0
+offset_right = 460.0
+offset_bottom = -407.0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("7_kfwyv")
+theme_override_font_sizes/font_size = 67
+text = "NEXT"
+horizontal_alignment = 1
+
+[node name="Test" type="Sprite2D" parent="labels"]
+position = Vector2(7.50003, -560)
+scale = Vector2(3.93878, 1)
+texture = ExtResource("9_u0sf2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(100, 50)
+offset_left = 241.0
+offset_top = -400.0
+offset_right = 470.0
+offset_bottom = -233.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5jwjk")
+
+[node name="PieceSpawner" type="Node" parent="."]
+script = ExtResource("3_ygpth")
+
+[node name="UI" parent="." instance=ExtResource("6_5ie2u")]
+
+[node name="VBoxContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 269.0
+offset_top = 10.0
+offset_right = 464.0
+offset_bottom = 486.0
+
+[node name="score_label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+offset_left = 3.0
+offset_top = 6.0
+offset_right = 203.0
+offset_bottom = 88.0
+theme_override_fonts/font = ExtResource("7_kfwyv")
+theme_override_font_sizes/font_size = 67
+text = "SCORE
+"
+
+[node name="score" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+offset_top = 86.0
+offset_right = 200.0
+offset_bottom = 168.0
+theme_override_fonts/font = ExtResource("7_kfwyv")
+theme_override_font_sizes/font_size = 60
+text = "0
+"
+script = ExtResource("5_8rsmg")
+
+[node name="time_label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+offset_left = 3.0
+offset_top = 174.0
+offset_right = 203.0
+offset_bottom = 256.0
+theme_override_fonts/font = ExtResource("7_kfwyv")
+theme_override_font_sizes/font_size = 67
+text = "TIME
+"
+
+[node name="time" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+offset_left = 3.0
+offset_top = 238.0
+offset_right = 203.0
+offset_bottom = 320.0
+theme_override_fonts/font = ExtResource("7_kfwyv")
+theme_override_font_sizes/font_size = 60
+text = "0
+"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_11vvb")
+}
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -480.0
+offset_top = 32.0
+offset_right = -352.0
+offset_bottom = 66.0
+theme = ExtResource("11_psayi")
+text = "CONTROLS"
+
+[node name="Instructions" type="Sprite2D" parent="."]
+position = Vector2(-416, 160)
+scale = Vector2(2.04839, 2.04839)
+texture = ExtResource("12_30c0c")
+
+[node name="transition" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hwltm")
+}
+
+[node name="ColorRect" type="ColorRect" parent="transition"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.833333)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -660.0
+offset_top = -650.0
+offset_right = 12.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="L1" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("13_qtgqm")
+volume_db = -10.0
+
+[node name="L2" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("14_u6j8o")
+volume_db = -10.0
+
+[node name="L3" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("15_8d1t3")
+volume_db = -10.0
+
+[node name="L4" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("15_7x8lc")
+volume_db = -10.0
+
+[node name="TetrominoMove" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("17_t35j0")
+volume_db = -20.0
+
+[node name="TetrominoDrop" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("18_aw23f")
+volume_db = -15.0

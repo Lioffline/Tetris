@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cs1wcqlfgxhjg"]
+
+[ext_resource type="Theme" uid="uid://dx4s2by52h7iv" path="res://Resources/_MainMenu.tres" id="1_rpyfg"]
+
+[node name="item" type="HBoxContainer"]
+theme = ExtResource("1_rpyfg")
+alignment = 1
+
+[node name="L_name" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="L_Score" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="L_time" type="Label" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 10
